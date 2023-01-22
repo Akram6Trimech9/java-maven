@@ -1,10 +1,13 @@
 pipeline {
     agent any
+    tools { 
+    maven : 'maven'
+    }
     stages {
         stage("init") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "just init"
                 }
             }
         }
