@@ -1,3 +1,4 @@
+def gv
 pipeline {
     agent any
     tools { 
@@ -7,7 +8,7 @@ pipeline {
         stage("init") {
             steps {
                 script {
-                    echo "just init"
+                    gv=load "script.groovy"
                 }
             }
         }
