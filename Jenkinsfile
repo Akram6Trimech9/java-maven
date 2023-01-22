@@ -1,40 +1,36 @@
 pipeline {
     agent any
-    tools { 
-        maven : 'maven'
-    }
     stages {
-         stage("test") {
-             steps {
-                 script { 
-                    echo "test"
-                  }
-             }
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
         }
-        stage("build npm") {
-             steps {
-                 script { 
-                    echo "build the app"
-                    sh 'npm run build'
-                 }
-             }
+        stage("build jar") {
+            steps {
+                script {
+                    echo "building jar"
+                    //gv.buildJar()
+                }
+            }
         }
         stage("build image") {
-             steps {
-                 script { 
-                    echo "build the app"
-                    withCredentials([usernamePassword(credentialsId:'Docker-hub-repo',passwordVariable:'PASS',usernameVariable: 'USER')]){
-                    sh 'docker build -t akram6trimech9/demo-app:6.9'
-                    sh "echo $PASS | docker login -u $USER  --password-stdin"
-                    sh 'docker push akram6trimech9/demo-app:6.9'    
-                  }
-                 }
-             }
+            steps {
+                script {
+                    echo "building image"
+                    //gv.buildImage()
+                }
+            }
         }
-        stage("Deploy"){
-             steps{
-                 echo "deploying the app" 
-                 }
+        stage("deploy") {
+            steps {
+                script {
+                    echo "deploying"
+                    //gv.deployApp()
+                }
+            }
         }
-    }
+    }  
 }
